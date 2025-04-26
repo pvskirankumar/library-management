@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Books from "./pages/book";
+import RootLayout from "./pages/RootLayout";
+import { logoutAction, tokenLoader } from "./utils/functionUtils";
+import AdminDashboard from "./components/AdminDashboard";
+import AuthenticationPage, { action as loginAction } from "./pages/AuthenticationPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootLayout />,
+      loader: tokenLoader,
+      id: "root",
+      children: [
+        {
+          path: "/admin",
+          element: <AdminDashboard />
+        },
+        {
+          path: "/books",
+          element: <Books />,
+        },
+        {
+          path: "/auth",
+          element: <AuthenticationPage />,
+          action: loginAction,
+        },
+        {
+          path: "logout",
+          action: logoutAction,
+        },
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;
