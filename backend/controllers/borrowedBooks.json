@@ -1,0 +1,10 @@
+{
+  "borrowedBooks": [
+    {
+      "id": 7,
+      "title": "War and Peace",
+      "author": "Leo Tolstoy",
+      "stock": 2
+    }
+  ]
+}
